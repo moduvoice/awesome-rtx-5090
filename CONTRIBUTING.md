@@ -30,6 +30,8 @@ In the pull request description, include:
 
 Please do not rank a project with vague superlatives. Report measured values with their conditions and attribute all claims to the source project.
 
+The English [README.md](README.md) is canonical. Please update the matching entry in [README.ko.md](README.ko.md) in the same pull request when possible. Maintainers can help with the Korean translation.
+
 ## Updating benchmark rows
 
 The model matrix is an index of published measurements. When adding or updating a row, keep the source's units and link directly to the supporting result. Do not compare rows tested with different backends or workloads as if they formed one leaderboard.

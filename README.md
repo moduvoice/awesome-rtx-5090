@@ -1,12 +1,14 @@
 # Awesome RTX 5090
 
+**English** | [한국어](README.ko.md)
+
 > A curated list of reproducible benchmarks, model recipes, inference engines, creative-AI workflows, and system tools tested on the NVIDIA GeForce RTX 5090.
 
 [![Awesome](https://awesome.re/badge.svg)](https://awesome.re)
 [![GitHub topic](https://img.shields.io/badge/GitHub%20topic-rtx--5090-181717?logo=github)](https://github.com/topics/rtx-5090)
 [![License: CC0](https://img.shields.io/badge/license-CC0--1.0-blue.svg)](LICENSE)
 
-RTX 5090에서 실제로 검증된 오픈소스 프로젝트와 측정 자료를 모은 목록입니다. Entries are selected for RTX 5090-specific measurements, setup instructions, or Blackwell `sm_120` support—not for merely mentioning the card.
+Entries are selected for RTX 5090-specific measurements, setup instructions, or Blackwell `sm_120` support—not for merely mentioning the card.
 
 > [!NOTE]
 > Benchmark numbers are not directly comparable across rows unless the model, quantization, context, prompt/output lengths, backend, and sampling settings match. Follow each source link for the full test conditions.
@@ -17,10 +19,12 @@ RTX 5090에서 실제로 검증된 오픈소스 프로젝트와 측정 자료를
 - [Model matrix](#model-matrix)
 - [Benchmarks and evaluations](#benchmarks-and-evaluations)
 - [LLM inference and serving](#llm-inference-and-serving)
+- [Coding agents and developer tools](#coding-agents-and-developer-tools)
 - [Windows and WSL](#windows-and-wsl)
 - [Image, video, 3D, and audio](#image-video-3d-and-audio)
 - [CUDA and ML libraries](#cuda-and-ml-libraries)
 - [Hardware, power, and virtualization](#hardware-power-and-virtualization)
+- [Finding projects beyond the topic](#finding-projects-beyond-the-topic)
 - [Selection policy](#selection-policy)
 - [Contributing](#contributing)
 
@@ -71,6 +75,7 @@ Treat all numbers as snapshots of rapidly changing software. Rows marked “clai
 - [NV-benchmark](https://github.com/QuanTuring-AI/NV-benchmark) — NIM/TensorRT-LLM versus Ollama study with throughput, TTFT, latency, and guardrail overhead data.
 - [ecocompute-dynamic-eval](https://github.com/hongping-zh/ecocompute-dynamic-eval) — Compares model accuracy, cost, and energy/carbon behavior, including RTX 5090 quantization experiments.
 - [gemma-rig](https://github.com/Stoneforge-Labs/gemma-rig) — Measured Gemma serving, evaluation, and agent-workflow results on one RTX 5090.
+- [benchmark-rtx5090](https://github.com/pendakwahteknologi/benchmark-rtx5090) — Qwen 2.5 GGUF benchmark suite spanning four model sizes and three quantizations, with prompt/decode speed, power efficiency, and cost reports. Discovered outside the `rtx-5090` topic.
 
 ## LLM inference and serving
 
@@ -79,8 +84,12 @@ Treat all numbers as snapshots of rapidly changing software. Rows marked “clai
 - [blackwell-geforce-nvfp4-gemm](https://github.com/lna-lab/blackwell-geforce-nvfp4-gemm) — SM120 patches and NVFP4 kernels for vLLM, FlashInfer, and CUTLASS.
 - [vllm-nvfp4-docker](https://github.com/ckienstra/vllm-nvfp4-docker) — Docker build and serving stack for vLLM with NVFP4 KV-cache support on Blackwell.
 - [vllm-sm120-nvfp4-mtp](https://github.com/seanyourhighness/vllm-sm120-nvfp4-mtp) — Pinned community vLLM image for Qwen 3.8 27B, NVFP4 KV, MTP-3, tool calls, and long context.
-- [Qwen5090](https://github.com/Ark0N/Qwen5090) — One-click Windows and scripted Linux setup for local Qwen 3.8 27B, an OpenAI-compatible endpoint, and coding-agent clients.
 - [club-3090](https://github.com/noonghunna/club-3090) — Community serving recipes for Qwen and Gemma across one- and two-GPU 3090/4090/5090 systems.
+
+## Coding agents and developer tools
+
+- [qwen3.8-27b-claude-code-desktop-bridge](https://github.com/Maharajahu/qwen3.8-27b-claude-code-desktop-bridge) — Runs a local Qwen 3.8 27B Q6 GGUF through Claude Code Desktop or CLI on one RTX 5090. Its Anthropic-to-OpenAI bridge preserves reasoning, vision, streaming, and tool calls, and documents 200K text and 128K vision profiles.
+- [Qwen5090](https://github.com/Ark0N/Qwen5090) — One-click Windows and scripted Linux setup for Qwen 3.8 27B with an OpenAI-compatible endpoint and local coding-agent clients, including Claude Code and DeepSeek Harness.
 
 ## Windows and WSL
 
@@ -95,6 +104,9 @@ Treat all numbers as snapshots of rapidly changing software. Rows marked “clai
 - [csm-rtx5090](https://github.com/D3velop-llc/csm-rtx5090) — CSM-1B streaming TTS pipeline optimized with CUDA graphs and `torch.compile` for Blackwell.
 - [fish-s2-rtx](https://github.com/Genesis1231/fish-s2-rtx) — OpenAI-compatible OpenAudio S2-Pro streaming TTS and voice cloning on vLLM-Omni.
 - [mpv-god-preset](https://github.com/GoldenSample/mpv-god-preset) — Measured mpv/VapourSynth setup for TensorRT upscaling, RIFE interpolation, HDR, and 4K/8K playback.
+- [ComfyUI-Qlip](https://github.com/TheStageAI/ComfyUI-Qlip) — Compiled diffusion engines with RTX 5090 measurements for FLUX.2 Klein, Z-Image-Turbo, Wan 2.2, and other image/video models. Discovered outside the topic.
+- [rtx509032g-minimax-h3-comfyui](https://github.com/Nuos/rtx509032g-minimax-h3-comfyui) — Reproducible MiniMax H3 text/image-to-video workflows with full wall-clock results, machine-readable data, and system-memory findings.
+- [comfyui-vae-float32](https://github.com/AndreiOrehov/comfyui-vae-float32) — LTX video VAE precision and tiling experiments measured on an RTX 5090, including VRAM spill behavior.
 
 ## CUDA and ML libraries
 
@@ -109,10 +121,50 @@ Treat all numbers as snapshots of rapidly changing software. Rows marked “clai
 - [ConnectorWatch](https://github.com/Shaderx/ConnectorWatch) — Experimental Windows input-voltage trend monitor with dashboard, tray notifications, and portable daemon.
 - [gpu-tuner](https://github.com/xdzleo/gpu-tuner) — Searches NVIDIA RTX 40/50-series undervolt, overclock, and efficiency points.
 - [vgpu-unlock-blackwell](https://github.com/bird/vgpu-unlock-blackwell) — Research into consumer Blackwell vGPU enablement. The README documents a current firmware/hardware blocker; this is research, not a working unlock.
+- [macuda](https://github.com/Davinchy/macuda) — Experimental userspace NVIDIA driver and CUDA/cuBLAS shims running an RTX 5090 as a Thunderbolt eGPU on Apple Silicon macOS, with correctness gates and native comparisons.
+
+## Finding projects beyond the topic
+
+The GitHub topic is a useful seed, but many strong results never add it. During the 2026-09-18 review, GitHub repository search returned more than 9,000 repositories mentioning `RTX 5090` outside the topic, and code search returned more than 6,000 README matches. Most are incidental mentions, so discovery and evidence filtering must be separate steps.
+
+### GitHub searches
+
+- [Repository README search for “RTX 5090”](https://github.com/search?q=%22RTX+5090%22+in%3Areadme&type=repositories) — broad discovery; sort by recently updated and then inspect the README.
+- [README code search](https://github.com/search?q=%22RTX+5090%22+path%3AREADME.md&type=code) — finds hardware tables and benchmark notes even when the repository has no matching topic or description.
+- [Result-file search](https://github.com/search?q=%22RTX+5090%22+%28path%3Aresults+OR+path%3Abenchmarks%29&type=code) — targets committed evidence rather than landing-page mentions.
+- [`sm_120` README search](https://github.com/search?q=sm_120+path%3AREADME.md&type=code) — finds Blackwell compatibility work that may say “RTX 50 series” instead of naming the 5090.
+- Search issues and discussions for exact error signatures such as `no kernel image`, `compute_120a`, or `unsupported gpu architecture`; fixes often appear there before a project updates its README.
+
+Useful GitHub CLI queries:
+
+```bash
+# Repositories that mention the card but do not use the topic
+gh api -X GET search/repositories \
+  -f q='"RTX 5090" in:name,description,readme -topic:rtx-5090' \
+  -f sort=updated -f order=desc -f per_page=100
+
+# README matches, including repositories without useful metadata
+gh api -X GET search/code \
+  -f q='"RTX 5090" filename:README.md' -f per_page=100
+
+# Look for measurements rather than simple hardware mentions
+gh search code '"RTX 5090" "tok/s"' --limit 100
+gh search code '"RTX 5090" path:benchmarks' --limit 100
+gh search code 'sm_120 path:results' --limit 100
+gh search repos '"Claude Code" "RTX 5090"' --limit 100
+```
+
+### Other sources
+
+- [Hugging Face full-text search](https://huggingface.co/search/full-text?q=%22RTX%205090%22) finds model cards, Spaces, and datasets such as [witcheer/rtx-5090-benchmarks](https://huggingface.co/datasets/witcheer/rtx-5090-benchmarks), which publishes speed and quality results for quantized LLMs.
+- arXiv and conference-paper full-text searches can find training or evaluation hardware, but a 5090 mention alone rarely makes a paper useful here. Prefer released code, raw results, and exact configuration details.
+- Reddit, NVIDIA Developer Forums, and vendor forums are good leads for compatibility fixes. Treat them as discovery sources and link the underlying repository or reproducible report when one exists.
+
+A high-signal query combines a hardware identifier with an evidence term: `"RTX 5090" "tok/s"`, `"RTX 5090" VRAM`, `"RTX 5090" benchmark`, `sm_120 results`, or `GB202 CUDA`. Verify the GPU variant, software versions, model/precision, workload, raw output, and whether the number is measured or projected before adding it.
 
 ## Selection policy
 
-The [GitHub `rtx-5090` topic](https://github.com/topics/rtx-5090?o=asc&s=forks) contained **90 public repositories when reviewed on 2026-09-18**. Topic membership is only a discovery signal. A project is included when its README provides at least one of:
+The [GitHub `rtx-5090` topic](https://github.com/topics/rtx-5090?o=asc&s=forks) contained **90 public repositories when reviewed on 2026-09-18**. The list also searches GitHub code, repository READMEs, result directories, and Hugging Face. Topic membership is only a discovery signal. A project is included when its README provides at least one of:
 
 - reproducible RTX 5090 measurements and the relevant test conditions;
 - a setup or compatibility fix specific to Blackwell consumer GPUs (`sm_120`/`sm_120a`);
