@@ -22,9 +22,10 @@ RTX 5090 전용 측정 결과, 설정 방법 또는 Blackwell `sm_120` 지원 �
 - [코딩 에이전트와 개발 도구](#코딩-에이전트와-개발-도구)
 - [Windows와 WSL](#windows와-wsl)
 - [이미지, 영상, 3D와 오디오](#이미지-영상-3d와-오디오)
+- [컴퓨터 비전](#컴퓨터-비전)
+- [과학 컴퓨팅](#과학-컴퓨팅)
 - [CUDA와 ML 라이브러리](#cuda와-ml-라이브러리)
 - [하드웨어, 전력과 가상화](#하드웨어-전력과-가상화)
-- [토픽 밖의 프로젝트 찾기](#토픽-밖의-프로젝트-찾기)
 - [선정 기준](#선정-기준)
 - [기여](#기여)
 
@@ -63,6 +64,9 @@ RTX 5090 전용 측정 결과, 설정 방법 또는 Blackwell `sm_120` 지원 �
 | Gemma 4 31B | Q4_K_M | llama.cpp / TurboQuant 포크 | 50.3 tok/s, 코딩 테스트 17/17 | 28 GB에서 전체 262K 보고 | [local-model-eval](https://github.com/gisenberg/local-model-eval/blob/main/results/MODEL_RANKINGS_5090.md) |
 | GPT-OSS 20B | MXFP4 | imp | 382.7 tok/s | 같은 모델과 플래그를 사용한 단일 스트림 디코드 비교 | [imp](https://github.com/kekzl/imp#how-fast-is-it-really) |
 | Nemotron 3 Nano | GGUF(출처 설정) | LM Studio | 237.5 tok/s, 최대 VRAM 26.9 GB | 프롬프트 512토큰, 생성 128토큰 | [llm-inference-benchmarks](https://github.com/patrickwhelan-uk/llm-inference-benchmarks#rtx-5090-lm-studio) |
+| Nemotron 3 Nano 30B-A3B | INT4 / HQQ4 / k4v4 | Krasis | 내부 디코드 151.76 tok/s | 하이브리드 GPU/CPU MoE 런타임 | [Krasis](https://github.com/brontoguana/krasis#benchmarks) |
+| Nemotron 3 Super 120B-A12B | INT4 / HQQ4 / k4v4 | Krasis | 내부 디코드 41.87 tok/s | expert residency로 VRAM보다 큰 모델 실행 | [Krasis](https://github.com/brontoguana/krasis#benchmarks) |
+| Qwen 3.5 397B-A17B | INT4 / HQQ4 / k4v4 | Krasis | 내부 디코드 10.04 tok/s | expert residency로 VRAM보다 큰 모델 실행 | [Krasis](https://github.com/brontoguana/krasis#benchmarks) |
 
 모든 수치는 빠르게 바뀌는 소프트웨어의 특정 시점 결과입니다. “프로젝트 주장”으로 표시된 행은 유용한 설정 자료이지만 이 목록이 조건을 통일하거나 독립적으로 검증한 결과가 아닙니다.
 
@@ -75,7 +79,9 @@ RTX 5090 전용 측정 결과, 설정 방법 또는 Blackwell `sm_120` 지원 �
 - [NV-benchmark](https://github.com/QuanTuring-AI/NV-benchmark) — NIM/TensorRT-LLM과 Ollama의 처리량, TTFT, 지연시간 및 guardrail 비용을 비교합니다.
 - [ecocompute-dynamic-eval](https://github.com/hongping-zh/ecocompute-dynamic-eval) — RTX 5090 양자화 실험을 포함해 모델 정확도, 비용과 에너지·탄소 지표를 비교합니다.
 - [gemma-rig](https://github.com/Stoneforge-Labs/gemma-rig) — RTX 5090 한 장에서 측정한 Gemma 서빙, 평가와 에이전트 작업 결과입니다.
-- [benchmark-rtx5090](https://github.com/pendakwahteknologi/benchmark-rtx5090) — Qwen 2.5 네 가지 크기와 세 가지 양자화를 대상으로 프롬프트·디코드 속도, 전력 효율과 비용을 측정합니다. `rtx-5090` 토픽 밖에서 발견했습니다.
+- [benchmark-rtx5090](https://github.com/pendakwahteknologi/benchmark-rtx5090) — Qwen 2.5 네 가지 크기와 세 가지 양자화를 대상으로 프롬프트·디코드 속도, 전력 효율과 비용을 측정합니다.
+- [llm-bench](https://github.com/brenoperucchi/llm-bench) — PT/EN 응답 품질, 도구 호출, 동시성과 긴 컨텍스트를 다루는 재현 가능한 Ollama 실험으로 원시 결과와 provenance manifest를 제공합니다.
+- [qwen3.8-27b-local-bench](https://github.com/Yunado/qwen3.8-27b-local-bench) — 다섯 개 GGUF 체크포인트와 열 가지 KV 캐시 구성의 Qwen 3.8 27B를 ARC-Challenge 500과 AIME 2026으로 평가합니다.
 
 ## LLM 추론과 서빙
 
@@ -90,6 +96,7 @@ RTX 5090 전용 측정 결과, 설정 방법 또는 Blackwell `sm_120` 지원 �
 
 - [qwen3.8-27b-claude-code-desktop-bridge](https://github.com/Maharajahu/qwen3.8-27b-claude-code-desktop-bridge) — RTX 5090 한 장에서 로컬 Qwen 3.8 27B Q6 GGUF를 Claude Code Desktop 또는 CLI에 연결합니다. Anthropic 요청을 OpenAI 형식으로 변환하는 bridge가 reasoning, vision, streaming과 tool call을 보존하며, 텍스트 200K와 vision 128K 프로필을 설명합니다.
 - [Qwen5090](https://github.com/Ark0N/Qwen5090) — Qwen 3.8 27B, OpenAI 호환 API와 Claude Code·DeepSeek Harness 같은 로컬 코딩 에이전트를 위한 Windows 원클릭 및 Linux 스크립트 설정입니다.
+- [Krasis](https://github.com/brontoguana/krasis) — VRAM보다 훨씬 큰 MoE 모델을 서빙하는 하이브리드 Rust/CUDA 런타임입니다. 원시 로그와 품질 검사와 함께 Nemotron 3 Nano 30B부터 Qwen 3.5 397B까지 RTX 5090 결과를 공개합니다.
 
 ## Windows와 WSL
 
@@ -104,9 +111,18 @@ RTX 5090 전용 측정 결과, 설정 방법 또는 Blackwell `sm_120` 지원 �
 - [csm-rtx5090](https://github.com/D3velop-llc/csm-rtx5090) — CUDA 그래프와 `torch.compile`로 Blackwell에 최적화한 CSM-1B 스트리밍 TTS 파이프라인입니다.
 - [fish-s2-rtx](https://github.com/Genesis1231/fish-s2-rtx) — vLLM-Omni 기반 OpenAI 호환 OpenAudio S2-Pro 스트리밍 TTS 및 음성 복제입니다.
 - [mpv-god-preset](https://github.com/GoldenSample/mpv-god-preset) — TensorRT 업스케일링, RIFE 보간, HDR 및 4K/8K 재생을 측정한 mpv/VapourSynth 설정입니다.
-- [ComfyUI-Qlip](https://github.com/TheStageAI/ComfyUI-Qlip) — FLUX.2 Klein, Z-Image-Turbo, Wan 2.2 등 이미지·영상 모델의 RTX 5090 측정 결과가 있는 컴파일형 확산 엔진입니다. 토픽 밖에서 발견했습니다.
+- [ComfyUI-Qlip](https://github.com/TheStageAI/ComfyUI-Qlip) — FLUX.2 Klein, Z-Image-Turbo, Wan 2.2 등 이미지·영상 모델의 RTX 5090 측정 결과가 있는 컴파일형 확산 엔진입니다.
 - [rtx509032g-minimax-h3-comfyui](https://github.com/Nuos/rtx509032g-minimax-h3-comfyui) — 전체 실행시간 결과, 기계 판독 데이터와 시스템 메모리 분석을 제공하는 재현 가능한 MiniMax H3 텍스트·이미지 영상화 워크플로입니다.
 - [comfyui-vae-float32](https://github.com/AndreiOrehov/comfyui-vae-float32) — VRAM spill 동작을 포함해 RTX 5090에서 측정한 LTX 영상 VAE 정밀도와 타일링 실험입니다.
+- [h3-5090-cu130-benchmark](https://github.com/alangael24/h3-5090-cu130-benchmark) — 고정 워크플로, 영상 출력과 Nsight 커널별 데이터를 사용해 PyTorch/cu128과 PyTorch/cu130을 비교한 MiniMax H3 프로파일링 실험입니다.
+
+## 컴퓨터 비전
+
+- [traffic-vision-pipeline](https://github.com/GoktuGumus/traffic-vision-pipeline) — 단계별 시간과 batch·실시간 카메라 작업의 RTX 5090 벤치마크 JSON을 제공하는 YOLO 차량 탐지·추적·통과 계수 파이프라인입니다.
+
+## 과학 컴퓨팅
+
+- [one-gpu-n-qubits](https://github.com/drishans/one-gpu-n-qubits) — VRAM 한계, 게이트 확장, 샘플링, managed-memory offload와 cuTensorNet을 다루는 재현 가능한 양자 회로 시뮬레이션 실험입니다. 모든 공개 수치가 환경 provenance를 담은 JSON에 연결됩니다.
 
 ## CUDA와 ML 라이브러리
 
@@ -123,48 +139,9 @@ RTX 5090 전용 측정 결과, 설정 방법 또는 Blackwell `sm_120` 지원 �
 - [vgpu-unlock-blackwell](https://github.com/bird/vgpu-unlock-blackwell) — 소비자용 Blackwell vGPU 활성화 연구입니다. README에 현재 펌웨어·하드웨어 차단 요소가 기록되어 있으며 작동하는 unlock 도구는 아닙니다.
 - [macuda](https://github.com/Davinchy/macuda) — Apple Silicon macOS에서 RTX 5090을 Thunderbolt eGPU로 실행하는 실험적 사용자 공간 NVIDIA 드라이버와 CUDA/cuBLAS shim입니다. 정확성 검사와 네이티브 비교 결과가 있습니다.
 
-## 토픽 밖의 프로젝트 찾기
-
-GitHub 토픽은 좋은 시작점이지만, 뛰어난 결과 중 상당수는 토픽을 달지 않습니다. 2026-09-18 조사에서 `rtx-5090` 토픽을 제외하고도 `RTX 5090`을 언급한 저장소가 GitHub 저장소 검색에 9천 개 이상, README 코드 검색에 6천 개 이상 나타났습니다. 대부분은 단순 환경 표기이므로 발견 단계와 증거 검증 단계를 분리해야 합니다.
-
-### GitHub 검색
-
-- [“RTX 5090” 저장소 README 검색](https://github.com/search?q=%22RTX+5090%22+in%3Areadme&type=repositories) — 최근 업데이트 순으로 정렬한 다음 README를 확인하는 넓은 검색입니다.
-- [README 코드 검색](https://github.com/search?q=%22RTX+5090%22+path%3AREADME.md&type=code) — 토픽이나 설명에 표시되지 않은 하드웨어 표와 벤치마크 기록을 찾습니다.
-- [결과 파일 검색](https://github.com/search?q=%22RTX+5090%22+%28path%3Aresults+OR+path%3Abenchmarks%29&type=code) — 소개 문구 대신 커밋된 측정 자료를 찾습니다.
-- [`sm_120` README 검색](https://github.com/search?q=sm_120+path%3AREADME.md&type=code) — 5090을 직접 쓰지 않고 “RTX 50 시리즈”라고 표현한 Blackwell 호환성 작업을 찾습니다.
-- 이슈와 Discussions에서 `no kernel image`, `compute_120a`, `unsupported gpu architecture` 같은 정확한 오류 문구를 검색하면 README보다 먼저 공개된 해결책을 찾을 수 있습니다.
-
-유용한 GitHub CLI 검색식:
-
-```bash
-# 카드를 언급하지만 토픽은 사용하지 않는 저장소
-gh api -X GET search/repositories \
-  -f q='"RTX 5090" in:name,description,readme -topic:rtx-5090' \
-  -f sort=updated -f order=desc -f per_page=100
-
-# 저장소 메타데이터가 부족해도 README에서 찾기
-gh api -X GET search/code \
-  -f q='"RTX 5090" filename:README.md' -f per_page=100
-
-# 단순 하드웨어 언급 대신 측정 결과 찾기
-gh search code '"RTX 5090" "tok/s"' --limit 100
-gh search code '"RTX 5090" path:benchmarks' --limit 100
-gh search code 'sm_120 path:results' --limit 100
-gh search repos '"Claude Code" "RTX 5090"' --limit 100
-```
-
-### 다른 출처
-
-- [Hugging Face 전체 텍스트 검색](https://huggingface.co/search/full-text?q=%22RTX%205090%22)으로 모델 카드, Space와 데이터셋을 찾을 수 있습니다. 예를 들어 [witcheer/rtx-5090-benchmarks](https://huggingface.co/datasets/witcheer/rtx-5090-benchmarks)는 양자화 LLM의 속도와 품질 결과를 공개합니다.
-- arXiv와 학회 논문 전체 텍스트 검색으로 학습·평가 하드웨어를 찾을 수 있지만 5090을 사용했다는 사실만으로는 이 목록에 유용하지 않습니다. 공개 코드, 원시 결과와 정확한 설정이 있는 자료를 우선합니다.
-- Reddit, NVIDIA Developer Forums와 제조사 포럼은 호환성 해결책을 발견하기에 좋습니다. 가능하면 포럼 글 자체보다 연결된 저장소나 재현 가능한 보고서를 등재합니다.
-
-좋은 검색식은 하드웨어 식별자와 증거 키워드를 결합합니다. 예: `"RTX 5090" "tok/s"`, `"RTX 5090" VRAM`, `"RTX 5090" benchmark`, `sm_120 results`, `GB202 CUDA`. 항목을 추가하기 전에 GPU 변형, 소프트웨어 버전, 모델·정밀도, 작업 부하, 원시 출력, 실측인지 추정인지 확인합니다.
-
 ## 선정 기준
 
-[GitHub `rtx-5090` 토픽](https://github.com/topics/rtx-5090?o=asc&s=forks)에는 2026-09-18 조사 시점에 공개 저장소 90개가 있었습니다. 이 목록은 GitHub 코드, 저장소 README, 결과 디렉터리와 Hugging Face도 함께 검색합니다. 토픽은 발견을 위한 단서일 뿐입니다. README에 다음 중 하나 이상이 있을 때 포함합니다.
+[GitHub `rtx-5090` 토픽](https://github.com/topics/rtx-5090?o=asc&s=forks)에는 2026-09-18 조사 시점에 공개 저장소 90개가 있었습니다. 토픽은 발견을 위한 단서일 뿐입니다. README에 다음 중 하나 이상이 있을 때 포함합니다.
 
 - 측정 조건을 확인할 수 있는 재현 가능한 RTX 5090 결과
 - Blackwell 소비자 GPU의 `sm_120`/`sm_120a` 전용 설정 또는 호환성 수정
